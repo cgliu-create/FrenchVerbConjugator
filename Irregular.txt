@@ -145,3 +145,5 @@ avoir/tenu
 tiendr
 tienn/ten
 X
+
+// add more irregs
