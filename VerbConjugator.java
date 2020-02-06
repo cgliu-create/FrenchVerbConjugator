@@ -80,13 +80,16 @@ public class VerbConjugator implements Conjugation{
     @Override
     public String conjImparfaitForm(String verb, String form) {
         VerbConjugator run = new VerbConjugator();
-        // determine stem from present nous form - ons
-        String temp = run.conjPresentForm(verb, "Nous").trim();
-        String isolate = temp.substring(temp.indexOf("s")+1);
-        String stem = isolate.substring(0, isolate.lastIndexOf("ons"));//fixed
+        String stem = "";
         // exception 
         if(verb.equalsIgnoreCase("etre") || verb.equalsIgnoreCase("être")){
             stem = "ét";
+        }
+        if(!(verb.equalsIgnoreCase("etre"))&&!(verb.equalsIgnoreCase("être"))){
+            // determine stem from present nous form - ons
+            String temp = run.conjPresentForm(verb, "Nous").trim();
+            String isolate = temp.substring(temp.indexOf("s")+1);
+            stem = isolate.substring(0, isolate.lastIndexOf("ons"));//fixed
         }
         // add appropriate ending
         Verb je = new Verb("Je", stem + "ais");
