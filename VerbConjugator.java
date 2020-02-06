@@ -83,7 +83,7 @@ public class VerbConjugator implements Conjugation{
         // determine stem from present nous form - ons
         String temp = run.conjPresentForm(verb, "Nous").trim();
         String isolate = temp.substring(temp.indexOf("s")+1);
-        String stem = isolate.substring(0, verb.length()-3);
+        String stem = isolate.substring(0, isolate.lastIndexOf("ons"));//fixed
         // exception 
         if(verb.equalsIgnoreCase("etre") || verb.equalsIgnoreCase("être")){
             stem = "ét";
@@ -339,18 +339,22 @@ public class VerbConjugator implements Conjugation{
     @Override
     public String conjPlusQueParfaitForm(String verb, String form) {
         VerbConjugator run = new VerbConjugator();
-        // passecompse form and isolate past participle
-        String spc = run.conjPasseCompose(verb, form);
-        String pc = spc.substring(spc.indexOf(' '));
-        String pp = pc.substring(pc.indexOf(' '));
+        // check if irreg
+        IrregVerb go = new IrregVerb();
         // helping verb imparfait
         String hverb = "avoir";
-        // check if irreg
-        IrregVerb irun = new IrregVerb();
-        if(irun.checkIfIrreg(verb)){
-            String ln = irun.conjIrregAvoirorEtre(verb);
-            if(ln.charAt(0) != 'a')
+        String pp = "";
+        if(go.checkIfIrreg(verb)){
+            String ln = go.conjIrregAvoirorEtre(verb);
+            if(ln.substring(0, ln.indexOf('/')).equalsIgnoreCase("etre")){
                 hverb = "etre";
+            }
+            pp = ln.substring(ln.indexOf('/')+1);
+        }
+        if(!(go.checkIfIrreg(verb))){
+             // passecompse form and isolate past participle
+            String spc = run.conjPasseCompose(verb, "je");
+            pp = spc.substring(spc.indexOf("ai")+2); // fixed bug
         }
         String jef = run.conjImparfaitForm(hverb,"je");
         String tuf = run.conjImparfaitForm(hverb,"tu");
@@ -400,18 +404,22 @@ public class VerbConjugator implements Conjugation{
     @Override
     public String conjFuturAnterieurForm(String verb, String form) {
         VerbConjugator run = new VerbConjugator();
-        // passecompse form and isolate past participle
-        String spc = run.conjPasseCompose(verb, form);
-        String pc = spc.substring(spc.indexOf(' '));
-        String pp = pc.substring(pc.indexOf(' '));
+        // check if irreg
+        IrregVerb go = new IrregVerb();
         // helping verb futur
         String hverb = "avoir";
-        // check if irreg
-        IrregVerb irun = new IrregVerb();
-        if(irun.checkIfIrreg(verb)){
-            String ln = irun.conjIrregAvoirorEtre(verb);
-            if(ln.charAt(0) != 'a')
+        String pp = "";
+        if(go.checkIfIrreg(verb)){
+            String ln = go.conjIrregAvoirorEtre(verb);
+            if(ln.charAt(0) != 'a'){
                 hverb = "etre";
+            }
+            pp = ln.substring(ln.indexOf('/')+1);
+        }
+        if(!(go.checkIfIrreg(verb))){
+             // passecompse form and isolate past participle
+            String spc = run.conjPasseCompose(verb, "je");
+            pp = spc.substring(spc.indexOf("ai")+2); // fixed bug
         }
         String jef = run.conjFuturSimpleForm(hverb,"je");
         String tuf = run.conjFuturSimpleForm(hverb,"tu");
@@ -513,7 +521,8 @@ public class VerbConjugator implements Conjugation{
         // determine stem from present ils form - ent
         String temp = run.conjPresentForm(verb, "ils").trim();
         String isolate = temp.substring(temp.indexOf("s")+1);
-        String stem = isolate.substring(0, verb.length()-3);
+        isolate = isolate.substring(isolate.indexOf("s")+1); //fixed
+        String stem = isolate.substring(0, isolate.lastIndexOf("ent"));
         String stema = stem;
         String stemb = stem;
         String enda = "e";

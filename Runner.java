@@ -79,7 +79,7 @@ public class Runner {
             System.out.println("Futur");
             System.out.println(conj.conjFuturSimpleForm(theVerb, theSubject));
             System.out.println("FuturProche");
-            System.out.println(conj.conjPlusQueParfaitForm(theVerb, theSubject));
+            System.out.println(conj.conjFuturProcheForm(theVerb, theSubject));
             System.out.println("PlusQueParfait");
             System.out.println(conj.conjPlusQueParfaitForm(theVerb, theSubject));
             System.out.println("FuturAnterieur");

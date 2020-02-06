@@ -9,9 +9,10 @@ public class IrregVerb {
             Scanner file = new Scanner(new File("Irregular.txt"));
             while(file.hasNextLine()){
                 String ln = file.nextLine();
-                if(ln.equalsIgnoreCase(verb))
+                if(ln.equalsIgnoreCase(verb)){
                     file.close();
                     return true;
+                } // fixed 
             }
             file.close();
         } catch (FileNotFoundException e) {
