@@ -517,14 +517,9 @@ public class VerbConjugator implements Conjugation{
     */
     @Override
     public String conjSubjonctifForm(String verb, String form, boolean past) {
-        VerbConjugator run = new VerbConjugator();
-        // determine stem from present ils form - ent
-        String temp = run.conjPresentForm(verb, "ils").trim();
-        String isolate = temp.substring(temp.indexOf("s")+1);
-        isolate = isolate.substring(isolate.indexOf("s")+1); //fixed
-        String stem = isolate.substring(0, isolate.lastIndexOf("ent"));
-        String stema = stem;
-        String stemb = stem;
+        // endings
+        String stema = "";
+        String stemb = "";
         String enda = "e";
         String endb = "es";
         String endc = "e";
@@ -534,7 +529,7 @@ public class VerbConjugator implements Conjugation{
         // check if irreg
         IrregVerb irun = new IrregVerb();
         if(irun.checkIfIrreg(verb)){
-            String ln = irun.conjIrregAvoirorEtre(verb);
+            String ln = irun.conjIrregSubjonctifForm(verb);
             if(ln.contains("1")){
                 enda = ln.substring(ln.indexOf('1')+1, ln.indexOf('2'));
                 endb = ln.substring(ln.indexOf('2')+1, ln.indexOf('3'));
@@ -545,16 +540,25 @@ public class VerbConjugator implements Conjugation{
             }
             if(!(ln.contains("1"))){
                 stema = ln.substring(0, ln.indexOf('/'));
-                stemb = ln.substring(ln.indexOf('X'));
+                stemb = ln.substring(ln.indexOf('/')+1,ln.indexOf('X'));
             }
+        }
+        if(!(irun.checkIfIrreg(verb))){
+            VerbConjugator run = new VerbConjugator();
+            // determine stem from present ils form - ent
+            String temp = run.conjPresentForm(verb, "ils").trim();
+            String isolate = temp.substring(temp.indexOf("s")+1);
+            isolate = isolate.substring(isolate.indexOf("s")+1); //fixed
+            String stem = isolate.substring(0, isolate.lastIndexOf("ent"));
+            stema = stemb = stem;
         }
         // add appropriate ending
         Verb je = new Verb("Je", stema + enda);
         Verb tu = new Verb("Tu", stema + endb);
-        Verb ilelleon = new Verb("Il/Elle/On", stem + endc);
+        Verb ilelleon = new Verb("Il/Elle/On", stema + endc);
         Verb nous = new Verb("Nous", stemb + endd);
         Verb vous = new Verb("Vous", stemb + ende);
-        Verb ilselles = new Verb("Ils/Elles", stemb + endf);
+        Verb ilselles = new Verb("Ils/Elles", stema + endf);
         // return requested form
         if(form.equalsIgnoreCase("Je")){
             return je.toString();

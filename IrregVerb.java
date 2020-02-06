@@ -120,7 +120,7 @@ public class IrregVerb {
         return null;
     }
 
-    public String conjIrregSubjonctifForm(String verb, String form, boolean past){
+    public String conjIrregSubjonctifForm(String verb){
         try {
             Scanner file = new Scanner(new File("Irregular.txt"));
             String lnx;
