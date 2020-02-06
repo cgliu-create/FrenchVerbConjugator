@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class IrregVerb {
-
+    // runs through the entire txt file, returns true if it finds the verb
     public boolean checkIfIrreg(String verb) {
         try {
             Scanner file = new Scanner(new File("Irregular.txt"));
@@ -20,6 +20,7 @@ public class IrregVerb {
         }
         return false;
     }
+    // these go to where the verb is and returns specific lines below the verb
     public String conjIrregPresentForm(String verb, String form){
         try {
             Scanner file = new Scanner(new File("Irregular.txt"));
