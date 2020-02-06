@@ -19,4 +19,4 @@ public interface Conjugation{
     // take off ending / take off ending and determine verb type
     // add appropriate ending
     // return list / return requested form
-    
+    //ok

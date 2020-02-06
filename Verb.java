@@ -9,6 +9,7 @@ public class Verb{
     public String toString(){
 		return this.subjectpronoun + " " + this.verbform;
     }
+    //ok
 }
 
 
